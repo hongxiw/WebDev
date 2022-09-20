@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Code Breaker</title>
+        <style></style>
+        <script>
+            let guesses, answer, guessNumberString;
+            let guessDiv, guessStatusDiv, otherStatusDiv;
+
+            function initialize() {
+                guessDiv = document.getElementById("guessDiv");
+                guessStatusDiv = document.getElementById("guessStatusDiv");
+                otherStatusDiv = document.getElementById("otherStatusDiv");
+                resetNumbers();
+            }
+
+            function resetNumbers() {
+                guesses = 0, answer = Math.floor((Math.random() * 900)) + 100, guessNumberString = "";
+                guessStatusDiv.innerHTML = "";
+                otherStatusDiv.innerHTML = "";
+                display();
+            }
+
+            function addNumber(number) {
+                if (guessNumberString.length() >= 3) {
+                    otherStatusDiv.innerHTML = "You can only enter 3 digits! Press submit";
+                    return;
+                }
+                guessNumberString += number;
+            }
+
+            function removeOne() {
+                if (guessNumberString.length() <= 0) {
+                    otherStatusDiv.innerHTML = "The guess is already empty!";
+                    return;
+                }
+                guessNumberString = guessNumberString.substring(0, guessNumberString.length() - 1);
+                display();
+            }
+
+            function submit() {
+                if (guessNumberString.length() != 3) {
+                    otherStatusDiv.innerHTML = "You can only submit 3 digit numbers!";
+                    return;
+                }
+                guesses++;
+                let submitGuess = parseInt(guessNumberString);
+                if (submitGuess > answer) {
+                    guessStatusDiv.innerHTML = "The answer is lower!"
+                } else if (submitGuess < answer) {
+                    guessStatusDiv.innerHTML = "The answer is hgiher!"
+                } else {
+                    guessStatusDiv.innerHTML = "You guessed it in " + guesses + " guesses! Resetting the code..."
+                    resetNumbers();
+                    return;
+                }
+                
+            }
+
+            function display() {
+                guessDiv.innerHTML = guessNumberString;
+            }
+
+
+
+        </script>
+    </head>
+    <body onload = "">
+        <h3>
+            Your guess:
+        </h3>
+        <div id = "guessDiv"></div>
+        <h5>
+            Your guess status:
+        </h5>
+        <div id = "guessStatusDiv"></div>
+        <h5>
+            Other status:
+        </h5>
+        <div id = "otherStatusDiv"></div>
+        <hr />
+        <h4>Keypad</h4>
+        <div>
+            <button onclick = "">1</button>
+            <button onclick = "">2</button>
+            <button onclick = "">3</button>
+        </div>
+        <div>
+            <button onclick="">4</button>
+            <button onclick="">5</button>
+            <button onclick="">6</button>
+        </div>
+        <div>
+            <button onclick="">7</button>
+            <button onclick="">8</button>
+            <button onclick="">9</button>
+        </div>
+        <div>
+            <button onclick="">0</button>
+            <button onclick="">Submit</button>
+            <button onclick="">Delete</button>
+        </div>
+    </body>
+</html>
